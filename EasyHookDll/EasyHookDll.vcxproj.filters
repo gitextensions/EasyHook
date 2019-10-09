@@ -8,9 +8,6 @@
     <Filter Include="Source Files\LocalHook">
       <UniqueIdentifier>{4d8bb9fe-c7e3-4cc2-84ef-ab8b1c9d0970}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\RemoteHook">
-      <UniqueIdentifier>{65c22cf5-9858-4c09-ac39-fb89d842a8b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Rtl">
       <UniqueIdentifier>{3d9fb4f5-3790-477e-806c-df9274b632bc}</UniqueIdentifier>
     </Filter>
@@ -61,24 +58,6 @@
     </ClCompile>
     <ClCompile Include="..\DriverShared\LocalHook\uninstall.c">
       <Filter>Source Files\LocalHook</Filter>
-    </ClCompile>
-    <ClCompile Include="RemoteHook\driver.cpp">
-      <Filter>Source Files\RemoteHook</Filter>
-    </ClCompile>
-    <ClCompile Include="RemoteHook\entry.cpp">
-      <Filter>Source Files\RemoteHook</Filter>
-    </ClCompile>
-    <ClCompile Include="gacutil.cpp">
-      <Filter>Source Files\RemoteHook</Filter>
-    </ClCompile>
-    <ClCompile Include="RemoteHook\service.c">
-      <Filter>Source Files\RemoteHook</Filter>
-    </ClCompile>
-    <ClCompile Include="RemoteHook\stealth.c">
-      <Filter>Source Files\RemoteHook</Filter>
-    </ClCompile>
-    <ClCompile Include="RemoteHook\thread.c">
-      <Filter>Source Files\RemoteHook</Filter>
     </ClCompile>
     <ClCompile Include="..\DriverShared\Rtl\error.c">
       <Filter>Source Files\Rtl</Filter>
@@ -158,9 +137,6 @@
     </MASM>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="EasyHookDll_64.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
     <ResourceCompile Include="EasyHookDll_32.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
