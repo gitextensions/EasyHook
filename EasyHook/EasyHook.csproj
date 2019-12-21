@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AB53862B-3B5C-4EFC-9787-1F01199EBFBF}</ProjectGuid>
+    <ProjectGuid>{26B8A7CB-F911-4ADE-85F6-FF3FE95BE0AC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EasyHook</RootNamespace>
