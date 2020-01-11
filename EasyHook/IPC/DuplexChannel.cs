@@ -1,6 +1,6 @@
 ﻿/*
     EasyHook - The reinvention of Windows API hooking
- 
+
     Copyright (C) 2009-2010 EasyHook
 
     This library is free software; you can redistribute it and/or
@@ -225,7 +225,9 @@ namespace EasyHook.IPC
       try
       {
         var remoteEndPoint = GetRemoteEndPoint(false);
+#pragma warning disable 618
         remoteEndPoint.SignalEndpointReady();
+#pragma warning restore 618
         _state |= DuplexChannelState.ClientUp;
         return true;
       }
