@@ -14,7 +14,4 @@
     <Reference Include="System.Runtime.Remoting" />
   </ItemGroup>
 
-  <!-- Create a dummy Test target -->
-  <Target Name="Test" />
-
 </Project>
