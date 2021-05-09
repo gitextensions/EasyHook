@@ -85,6 +85,13 @@ Description:
                                 "_NativeInjectionEntryPoint@4");
 #endif
 
+#ifndef _M_X64
+    // Support exports renamed from _NativeInjectionEntryPoint@4 to NativeInjectionEntryPoint in .def EXPORTS section for 32bit
+    if (EntryProc == NULL) {
+        EntryProc = (REMOTE_ENTRY_POINT*)GetProcAddress(hUserLib, "NativeInjectionEntryPoint");
+    }
+#endif
+
     if(hUserLib == NULL)
         UNMANAGED_ERROR(20);
 
@@ -384,6 +391,19 @@ Description:
 	InInfo->ExitThread = GetProcAddress(hMod, "ExitThread");
 	InInfo->GetLastError = GetProcAddress(hMod, "GetLastError");
 
+	/*
+	Check that the call actually returned proper pointers.
+	*/
+	if (InInfo->LoadLibraryW == NULL ||
+	    InInfo->FreeLibrary == NULL ||
+	    InInfo->GetProcAddress == NULL ||
+	    InInfo->VirtualFree == NULL ||
+	    InInfo->VirtualProtect == NULL ||
+	    InInfo->ExitThread == NULL ||
+	    InInfo->GetLastError == NULL)
+	{
+		UNMANAGED_ERROR(3);
+	}
     
 
 	/* 

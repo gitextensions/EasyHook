@@ -22,7 +22,7 @@
 //
 // Please visit https://easyhook.github.io for more information
 // about the project and latest updates.
-
+#if !NETSTANDARD
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,10 +33,10 @@ using System.Security.Principal;
 using System.Security.Policy;
 using System.Security;
 using System.Security.Permissions;
-using System.Runtime.Remoting;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
 using System.Threading;
@@ -674,8 +674,8 @@ namespace EasyHook
                             InTargetPID,
                             InWakeUpTID,
                             NativeAPI.EASYHOOK_INJECT_MANAGED | InNativeOptions,
-                            Path.Combine(Config.HelperLibraryLocation, "EasyLoad32.dll"),
-                            Path.Combine(Config.HelperLibraryLocation, "EasyLoad64.dll"),
+                            Path.Combine(Config.HelperLibraryLocation, Config.HelperLibrary32Bit),
+                            Path.Combine(Config.HelperLibraryLocation, Config.HelperLibrary64Bit),
                             hPassThru.AddrOfPinnedObject(),
                             (int)PassThru.Length))
                     {
@@ -690,6 +690,10 @@ namespace EasyHook
                                         InNativeOptions,
                                         InLibraryPath_x86,
                                         InLibraryPath_x64,
+                                        Path.Combine(Config.HelperLibraryLocation, Config.HelperLibrary32Bit),
+                                        Path.Combine(Config.HelperLibraryLocation, Config.HelperLibrary64Bit),
+                                        NativeAPI_EasyHook.DllName32,
+                                        NativeAPI_EasyHook.DllName64,
                                         InRequireStrongName,
                                         InPassThruArgs);
                                 else
@@ -708,6 +712,10 @@ namespace EasyHook
                                         InNativeOptions,
                                         InLibraryPath_x86,
                                         InLibraryPath_x64,
+                                        Path.Combine(Config.HelperLibraryLocation, Config.HelperLibrary32Bit),
+                                        Path.Combine(Config.HelperLibraryLocation, Config.HelperLibrary64Bit),
+                                        NativeAPI_EasyHook.DllName32,
+                                        NativeAPI_EasyHook.DllName64,
                                         InRequireStrongName,
                                         InPassThruArgs);
                                 else
@@ -1052,3 +1060,4 @@ namespace EasyHook
         }
     }
 }
+#endif

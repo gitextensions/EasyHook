@@ -615,7 +615,7 @@ Parameters:
             No special behavior. The given libraries are expected to be unmanaged DLLs.
             Further they should export an entry point named 
             "NativeInjectionEntryPoint" (in case of 64-bit) and
-            "_NativeInjectionEntryPoint@4" (in case of 32-bit). The expected entry point 
+            _NativeInjectionEntryPoint@4" (in case of 32-bit). The expected entry point 
             signature is REMOTE_ENTRY_POINT.
 
         EASYHOOK_INJECT_MANAGED: 
@@ -1153,7 +1153,7 @@ Returns:
 #ifdef _M_X64
 	CHAR*					EasyHookEntry = "HookCompleteInjection";
 #else
-	CHAR*					EasyHookEntry = "_HookCompleteInjection@4";
+	CHAR*					EasyHookEntry = "HookCompleteInjection";
 #endif
 
     // validate parameters
@@ -1239,6 +1239,9 @@ Returns:
 	// Ensure that if we have injected into a suspended process that we can retrieve the remote function addresses
 	FORCE(NtForceLdrInitializeThunk(hProc));
 
+	// The first GetRemoteModuleHandle call in GetRemoteFuncAddress can return NULL in some applications started in a suspended. Call GetRemoteFuncAddress once to prevent an access violation error.
+	GetRemoteFuncAddress(InTargetPID, hProc, "kernel32.dll", "LoadLibraryW");
+	
 	// Determine function addresses within remote process
     Info->LoadLibraryW   = (PVOID)GetRemoteFuncAddress(InTargetPID, hProc, "kernel32.dll", "LoadLibraryW");
 	Info->FreeLibrary    = (PVOID)GetRemoteFuncAddress(InTargetPID, hProc, "kernel32.dll", "FreeLibrary");
@@ -1805,7 +1808,7 @@ Returns:
                     opcodes++;
                 }
 
-                sprintf_s(result->EntryDisasm + strlen(result->EntryDisasm), 1024 - strlen(result->EntryDisasm), "%-35s%-30sIP:%x\n", asmBuf, buf, nextInstr);
+                sprintf_s(result->EntryDisasm + strlen(result->EntryDisasm), 1024 - strlen(result->EntryDisasm), "%-35s%-30sIP:%I64x\n", asmBuf, buf, nextInstr);
                 a++;
 
                 pEntryPoint = (DWORD_PTR)nextInstr;
@@ -1833,7 +1836,7 @@ Returns:
                     sprintf_s(asmBuf + strlen(asmBuf), 260 - strlen(asmBuf), "%02X ", *opcodes);
                     opcodes++;
                 }
-                sprintf_s(result->EntryDisasm + strlen(result->EntryDisasm), 1024 - strlen(result->EntryDisasm), "%-35s%-30sIP:%x\n", asmBuf, buf, nextInstr);
+                sprintf_s(result->EntryDisasm + strlen(result->EntryDisasm), 1024 - strlen(result->EntryDisasm), "%-35s%-30sIP:%I64x\n", asmBuf, buf, nextInstr);
                 pEntryPoint = (DWORD_PTR)nextInstr;
             }
             pEntryPoint = (DWORD_PTR)hookBuf->OldProc;
@@ -1848,7 +1851,7 @@ Returns:
                     sprintf_s(asmBuf + strlen(asmBuf), 260 - strlen(asmBuf), "%02X ", *opcodes);
                     opcodes++;
                 }
-                sprintf_s(result->RelocDisasm + strlen(result->RelocDisasm), 1024 - strlen(result->RelocDisasm), "%-35s%-30sIP:%x\n", asmBuf, buf, nextInstr);
+                sprintf_s(result->RelocDisasm + strlen(result->RelocDisasm), 1024 - strlen(result->RelocDisasm), "%-35s%-30sIP:%I64x\n", asmBuf, buf, nextInstr);
                 pEntryPoint = (DWORD_PTR)nextInstr;
             }
         }

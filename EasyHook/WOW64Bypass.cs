@@ -22,7 +22,7 @@
 //
 // Please visit https://easyhook.github.io for more information
 // about the project and latest updates.
-
+#if !NETSTANDARD
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,7 +61,10 @@ namespace EasyHook
 
                     Process Proc = new Process();
                     ProcessStartInfo StartInfo = new ProcessStartInfo(
-                            SvcExecutablePath, "\"" + ChannelName + "\"");
+                            SvcExecutablePath, "\"" + ChannelName + "\" \""
+                            // 2nd argument tells the WOW64Bypass/service which native EasyHook dll to use
+                            // Note that if this process is 64-bit, we are starting a 32-bit process and vice versa
+                            + (NativeAPI.Is64Bit ? Config.EasyHook32DllName : Config.EasyHook64DllName) +"\"");
 
                     // create sync objects
                     EventWaitHandle Listening = new EventWaitHandle(
@@ -98,6 +101,10 @@ namespace EasyHook
             Int32 InNativeOptions,
             String InLibraryPath_x86,
             String InLibraryPath_x64,
+            String helperLibrary_x86,
+            String helperLibrary_x64,
+            String easyHookLibrary_x86,
+            String easyHookLibrary_x64,
             Boolean InRequireStrongName,
             params Object[] InPassThruArgs)
         {
@@ -110,6 +117,10 @@ namespace EasyHook
                 InNativeOptions,
                 InLibraryPath_x86, 
                 InLibraryPath_x64,
+                helperLibrary_x86,
+                helperLibrary_x64,
+                easyHookLibrary_x86,
+                easyHookLibrary_x64,
                 false,
                 true,
                 InRequireStrongName,
@@ -117,3 +128,4 @@ namespace EasyHook
         }
     }
 }
+#endif
